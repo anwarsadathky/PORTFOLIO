@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-
+import profileImg from '../../public/profile.png';
 const Hero = () => {
   return (
     <section id="home" className="min-h-screen flex items-center section-padding pt-20">
@@ -50,7 +50,7 @@ const Hero = () => {
               }}
             />
             <motion.img
-              src="/profile.png"
+              src={profileImg}
               alt="Anwar Sadath KY"
               className="w-full h-full rounded-full object-cover border-4 border-secondary/30"
               style={{
