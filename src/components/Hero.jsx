@@ -53,7 +53,7 @@ const Hero = () => {
             <motion.img
               src={getAssetPath('profile.png')}
               alt="Profile"
-              className="w-48 h-48 rounded-full border-4 border-secondary"
+              className="absolute inset-0 w-full h-full rounded-full object-cover border-4 border-secondary"
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
