@@ -24,6 +24,19 @@ const Loading = ({ onLoadingComplete }) => {
     };
   }, [onLoadingComplete]);
 
+  const letterVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    })
+  };
+
   return (
     <motion.div
       className="h-full w-full bg-primary flex items-center justify-center"
@@ -37,9 +50,24 @@ const Loading = ({ onLoadingComplete }) => {
         transition={{ duration: 0.5 }}
         className="text-center"
       >
-        <span className="text-6xl font-bold bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent bg-300% animate-gradient">
-          A.S.K
-        </span>
+        <div className="flex items-center justify-center space-x-2">
+          {["A", ".", "S", ".", "K"].map((letter, index) => (
+            <motion.span
+              key={index}
+              custom={index}
+              variants={letterVariants}
+              initial="hidden"
+              animate={showContent ? "visible" : "hidden"}
+              className="text-6xl font-bold bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent"
+              style={{
+                backgroundSize: "200% 200%",
+                animation: "gradient 3s ease infinite"
+              }}
+            >
+              {letter}
+            </motion.span>
+          ))}
+        </div>
       </motion.div>
     </motion.div>
   );
