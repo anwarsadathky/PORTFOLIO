@@ -1,0 +1,95 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  
+  body {
+    @apply bg-primary text-textPrimary font-sans cursor-none;
+    overflow: hidden; /* Initially hidden, will be enabled after loading */
+  }
+
+  /* Hide cursor on clickable elements */
+  a, button, [role="button"] {
+    @apply cursor-none;
+  }
+
+  /* Custom cursor hover effect */
+  a:hover, button:hover, [role="button"]:hover {
+    @apply cursor-none;
+  }
+}
+
+@layer components {
+  .section-padding {
+    @apply py-20 px-4 sm:px-6 lg:px-8;
+  }
+  
+  .heading {
+    @apply text-4xl sm:text-5xl font-bold mb-8;
+  }
+  
+  .subheading {
+    @apply text-xl text-textSecondary mb-4;
+  }
+
+  .skill-icon {
+    @apply w-16 h-16 transition-all duration-300;
+  }
+
+  .skill-icon:hover {
+    @apply scale-110;
+    filter: drop-shadow(0 0 8px theme('colors.secondary'));
+    filter: drop-shadow(0 0 12px theme('colors.secondary'));
+  }
+
+  .nav-link {
+    @apply text-textSecondary hover:text-secondary transition-colors duration-300;
+  }
+
+  /* Skill card glow effect */
+  .skill-card {
+    @apply relative bg-primary/50 p-4 rounded-lg transition-all duration-300;
+  }
+
+  .skill-card::before {
+    content: '';
+    @apply absolute inset-0 rounded-lg transition-all duration-300 opacity-0;
+    background: radial-gradient(
+      circle at center,
+      theme('colors.secondary') 0%,
+      transparent 70%
+    );
+    z-index: -1;
+  }
+
+  .skill-card:hover::before {
+    @apply opacity-20;
+    transform: scale(1.1);
+  }
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+* {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Ensure custom cursor works on all clickable elements */
+* {
+  cursor: none !important;
+}
