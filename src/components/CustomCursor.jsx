@@ -1,76 +1,106 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useSpring } from 'framer-motion';
 
 const CustomCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isClicking, setIsClicking] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [touchActive, setTouchActive] = useState(false);
+
+  const cursorX = useSpring(0, { stiffness: 1000, damping: 50 });
+  const cursorY = useSpring(0, { stiffness: 1000, damping: 50 });
 
   useEffect(() => {
-    const updateMousePosition = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    // Mouse event handlers
+    const handleMouseMove = (e) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+      setVisible(true);
     };
 
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
+    const handleMouseLeave = () => {
+      setVisible(false);
+    };
 
-    window.addEventListener('mousemove', updateMousePosition);
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
+    // Touch event handlers
+    const handleTouchStart = (e) => {
+      const touch = e.touches[0];
+      cursorX.set(touch.clientX);
+      cursorY.set(touch.clientY);
+      setVisible(true);
+      setTouchActive(true);
+    };
+
+    const handleTouchMove = (e) => {
+      const touch = e.touches[0];
+      cursorX.set(touch.clientX);
+      cursorY.set(touch.clientY);
+      setVisible(true);
+    };
+
+    const handleTouchEnd = () => {
+      setTouchActive(false);
+      // Keep cursor visible for a moment after touch
+      setTimeout(() => {
+        if (!touchActive) {
+          setVisible(false);
+        }
+      }, 150);
+    };
+
+    // Add event listeners
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: true });
+    window.addEventListener('touchend', handleTouchEnd);
 
     return () => {
-      window.removeEventListener('mousemove', updateMousePosition);
-      window.removeEventListener('mousedown', handleMouseDown);
-      window.removeEventListener('mouseup', handleMouseUp);
+      // Remove event listeners
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
     };
-  }, []);
+  }, [cursorX, cursorY, touchActive]);
 
   return (
-    <>
-      {/* Main cursor */}
+    <motion.div
+      className="fixed pointer-events-none z-[9999]"
+      animate={{
+        opacity: visible ? 1 : 0,
+        scale: touchActive ? 1.5 : 1,
+      }}
+      transition={{
+        opacity: { duration: 0.2 },
+        scale: { duration: 0.15 }
+      }}
+      style={{
+        x: cursorX,
+        y: cursorY,
+        translateX: '-50%',
+        translateY: '-50%',
+      }}
+    >
+      {/* Outer circle */}
       <motion.div
-        className="fixed pointer-events-none z-[9999] mix-blend-difference"
+        className="relative flex items-center justify-center"
         animate={{
-          x: mousePosition.x - 8,
-          y: mousePosition.y - 8,
-          scale: isClicking ? 0.8 : 1,
+          scale: touchActive ? 1.2 : 1,
         }}
-        transition={{
-          type: "spring",
-          stiffness: 800,
-          damping: 30,
-          mass: 0.2,
-        }}
+        transition={{ duration: 0.2 }}
       >
-        <div className="w-4 h-4 relative">
-          {/* Diamond shape */}
-          <div className="absolute inset-0 rotate-45 bg-secondary" />
-          {/* Glow effect */}
-          <div className="absolute inset-0 rotate-45 bg-secondary blur-[2px] opacity-50" />
-        </div>
+        <div className="absolute w-8 h-8 border-2 border-secondary rounded-full" />
+        
+        {/* Inner dot */}
+        <motion.div
+          className="w-2 h-2 bg-secondary rounded-full"
+          animate={{
+            scale: touchActive ? 1.5 : 1,
+          }}
+          transition={{ duration: 0.2 }}
+        />
       </motion.div>
-
-      {/* Trailer effect */}
-      <motion.div
-        className="fixed pointer-events-none z-[9998]"
-        animate={{
-          x: mousePosition.x - 16,
-          y: mousePosition.y - 16,
-          scale: isClicking ? 1.2 : 1,
-        }}
-        transition={{
-          type: "spring",
-          stiffness: 400,
-          damping: 28,
-          mass: 0.5,
-        }}
-      >
-        <div className="w-8 h-8 relative">
-          {/* Outer glow */}
-          <div className="absolute inset-0 rotate-45 border border-secondary/30" />
-          <div className="absolute inset-0 rotate-45 border border-secondary/20 blur-[4px]" />
-        </div>
-      </motion.div>
-    </>
+    </motion.div>
   );
 };
 

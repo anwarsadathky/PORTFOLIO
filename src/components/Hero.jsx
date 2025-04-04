@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import { getAssetPath } from '../utils/paths';
 
 const Hero = () => {
   return (
@@ -51,12 +50,14 @@ const Hero = () => {
               }}
             />
             <motion.img
-              src={getAssetPath('profile.png')}
-              alt="Profile"
-              className="absolute inset-0 w-full h-full rounded-full object-cover border-4 border-secondary"
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
+              src="/profile.png"
+              alt="Anwar Sadath KY"
+              className="w-full h-full rounded-full object-cover border-4 border-secondary/30"
+              style={{
+                filter: 'brightness(1.1) contrast(1.1)',
+              }}
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
             />
           </div>
         </motion.div>

@@ -6,22 +6,16 @@
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
   
   body {
     @apply bg-primary text-textPrimary font-sans cursor-none;
     overflow: hidden; /* Initially hidden, will be enabled after loading */
-    will-change: transform;
-    backface-visibility: hidden;
-    transform: translateZ(0);
   }
 
   /* Hide cursor on clickable elements */
   a, button, [role="button"] {
     @apply cursor-none;
-    will-change: transform;
   }
 
   /* Custom cursor hover effect */
@@ -45,8 +39,6 @@
 
   .skill-icon {
     @apply w-16 h-16 transition-all duration-300;
-    will-change: transform;
-    backface-visibility: hidden;
   }
 
   .skill-icon:hover {
@@ -62,8 +54,6 @@
   /* Skill card glow effect */
   .skill-card {
     @apply relative bg-primary/50 p-4 rounded-lg transition-all duration-300;
-    will-change: transform, opacity;
-    backface-visibility: hidden;
   }
 
   .skill-card::before {
@@ -75,7 +65,6 @@
       transparent 70%
     );
     z-index: -1;
-    will-change: transform, opacity;
   }
 
   .skill-card:hover::before {
@@ -87,7 +76,6 @@
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
-  overscroll-behavior: none;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
@@ -106,77 +94,13 @@ html {
   cursor: none !important;
 }
 
-/* Cursor styles - only apply on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  body {
-    cursor: none;
-  }
-
-  a, button, .clickable {
-    cursor: none;
-  }
-
-  .custom-cursor {
-    display: block;
-    width: 20px;
-    height: 20px;
-    background: var(--secondary);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    mix-blend-mode: difference;
-    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-    backface-visibility: hidden;
-  }
-
-  .custom-cursor.hover {
-    transform: scale(1.5);
-  }
+/* Selection styles */
+::selection {
+  background-color: rgb(100 255 218 / 0.2);
+  color: var(--color-text);
 }
 
-/* Hide custom cursor on touch devices */
-@media (hover: none) and (pointer: coarse) {
-  .custom-cursor {
-    display: none;
-  }
-  
-  body {
-    cursor: auto;
-  }
-
-  a, button, .clickable {
-    cursor: pointer;
-  }
-}
-
-/* High refresh rate optimizations */
-@media (prefers-reduced-motion: no-preference) {
-  .animate-smooth {
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  
-  .scroll-smooth {
-    scroll-behavior: smooth;
-    overscroll-behavior: none;
-  }
-}
-
-/* Loading animation keyframes */
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.animate-gradient {
-  animation: gradient 3s ease infinite;
-  background-size: 200% 200%;
+::-moz-selection {
+  background-color: rgb(100 255 218 / 0.2);
+  color: var(--color-text);
 }

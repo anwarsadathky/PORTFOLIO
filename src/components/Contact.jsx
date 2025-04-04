@@ -53,19 +53,19 @@ const Contact = () => {
     });
 
     try {
-      // Add the date to the form before sending
-      const dateInput = document.createElement('input');
-      dateInput.type = 'hidden';
-      dateInput.name = 'date';
-      dateInput.value = formattedDate;
-      form.current.appendChild(dateInput);
-
       const result = await emailjs.sendForm(
         'service_8zv2kb9',
         'template_k087tr3',
         form.current,
         'XiwtRY__OgBds9r5a'
       );
+
+      // Add the date to the form before sending
+      const dateInput = document.createElement('input');
+      dateInput.type = 'hidden';
+      dateInput.name = 'date';
+      dateInput.value = formattedDate;
+      form.current.appendChild(dateInput);
 
       if (result.status === 200) {
         setSubmitStatus({
@@ -83,11 +83,6 @@ const Contact = () => {
         message: 'Failed to send message. Please try again.'
       });
     } finally {
-      // Remove the temporary date input
-      const dateInput = form.current.querySelector('input[name="date"]');
-      if (dateInput) {
-        dateInput.remove();
-      }
       setIsSubmitting(false);
     }
   };
@@ -118,25 +113,25 @@ const Contact = () => {
             <div className="absolute inset-0 bg-secondary/5 rounded-2xl backdrop-blur-sm -z-10" />
             <form ref={form} onSubmit={handleSubmit} className="space-y-6 p-8 rounded-2xl">
               <div>
-                <label htmlFor="name" className="block text-secondary font-medium mb-2">
+                <label htmlFor="user_name" className="block text-secondary font-medium mb-2">
                   Name
                 </label>
                 <input
                   type="text"
-                  id="name"
-                  name="name"
+                  id="user_name"
+                  name="user_name"
                   className="w-full px-4 py-3 bg-primary/30 border-2 border-secondary/20 rounded-lg focus:outline-none focus:border-secondary text-textPrimary transition-colors duration-300"
                   required
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-secondary font-medium mb-2">
+                <label htmlFor="user_email" className="block text-secondary font-medium mb-2">
                   Email
                 </label>
                 <input
                   type="email"
-                  id="email"
-                  name="email"
+                  id="user_email"
+                  name="user_email"
                   className="w-full px-4 py-3 bg-primary/30 border-2 border-secondary/20 rounded-lg focus:outline-none focus:border-secondary text-textPrimary transition-colors duration-300"
                   required
                 />
