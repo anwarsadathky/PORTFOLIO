@@ -3,6 +3,15 @@
 @tailwind utilities;
 
 @layer base {
+  /* Text selection color */
+  ::selection {
+    background-color: rgb(100 255 218 / 0.2);
+  }
+  
+  ::-moz-selection {
+    background-color: rgb(100 255 218 / 0.2);
+  }
+
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
@@ -92,15 +101,4 @@ html {
 /* Ensure custom cursor works on all clickable elements */
 * {
   cursor: none !important;
-}
-
-/* Selection styles */
-::selection {
-  background-color: rgb(100 255 218 / 0.2);
-  color: var(--color-text);
-}
-
-::-moz-selection {
-  background-color: rgb(100 255 218 / 0.2);
-  color: var(--color-text);
 }

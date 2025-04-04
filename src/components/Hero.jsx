@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import profileImg from '../assets/profile.png';
+
 
 const Hero = () => {
   return (
@@ -50,7 +52,7 @@ const Hero = () => {
               }}
             />
             <motion.img
-              src="/profile.png"
+              src={profileImg}
               alt="Anwar Sadath KY"
               className="w-full h-full rounded-full object-cover border-4 border-secondary/30"
               style={{
