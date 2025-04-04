@@ -1,7 +1,11 @@
 import { motion } from 'framer-motion';
+<<<<<<< HEAD
 import profileImg from '../assets/profile.png';
 
 
+=======
+import profileImg from '../../public/profile.png';
+>>>>>>> 71de135ec903bd63cf0a6d2c98a920098edae578
 const Hero = () => {
   return (
     <section id="home" className="min-h-screen flex items-center section-padding pt-20">
