@@ -93,3 +93,46 @@ html {
 * {
   cursor: none !important;
 }
+
+/* Cursor styles - only apply on non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+
+  a, button, .clickable {
+    cursor: none;
+  }
+
+  .custom-cursor {
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: var(--secondary);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transition: transform 0.2s ease;
+  }
+
+  .custom-cursor.hover {
+    transform: scale(1.5);
+  }
+}
+
+/* Hide custom cursor on touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor {
+    display: none;
+  }
+  
+  body {
+    cursor: auto;
+  }
+
+  a, button, .clickable {
+    cursor: pointer;
+  }
+}
