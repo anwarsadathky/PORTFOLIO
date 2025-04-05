@@ -13,7 +13,7 @@ const experiences = [
     title: 'B.Tech in Computer Science',
     company: 'APJ Abdul Kalam Technological University',
     companyLink: 'https://ktu.edu.in/',
-    period: '2020 - 2025',
+    period: '2020 - 2024',
     description: 'Graduated with a CGPA of 7.5. Focused on software development and computer science fundamentals.',
   },
 ];
