@@ -53,19 +53,21 @@ const Contact = () => {
     });
 
     try {
+      // Create a FormData object from the form
+      const formData = new FormData(form.current);
+      
+      // Add the date to the form data
+      formData.append('date', formattedDate);
+      
+      // Add the from_email field with the user's email
+      formData.append('from_email', formData.get('user_email'));
+
       const result = await emailjs.sendForm(
         'service_8zv2kb9',
         'template_k087tr3',
         form.current,
         'XiwtRY__OgBds9r5a'
       );
-
-      // Add the date to the form before sending
-      const dateInput = document.createElement('input');
-      dateInput.type = 'hidden';
-      dateInput.name = 'date';
-      dateInput.value = formattedDate;
-      form.current.appendChild(dateInput);
 
       if (result.status === 200) {
         setSubmitStatus({
