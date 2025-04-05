@@ -1,23 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
+import Projects from './components/Projects';
 import Contact from './components/Contact';
-import Loading from './components/Loading';
 import CustomCursor from './components/CustomCursor';
+import Loading from './components/Loading';
+import { enableProtection } from './utils/protection';
 
-const App = () => {
+function App() {
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Enable protection against copying and screenshots
+    enableProtection();
+  }, []);
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
-    // Add a small delay before scrolling is enabled
+    // Enable scrolling after a short delay
     setTimeout(() => {
       document.body.style.overflow = 'auto';
-    }, 1500);
+    }, 500);
   };
 
   return (
@@ -28,33 +35,22 @@ const App = () => {
       <AnimatePresence mode="wait">
         {isLoading && (
           <motion.div
-            key="loading"
-            className="fixed inset-0 z-50"
-            exit={{ 
-              y: '-100%',
-              transition: { 
-                duration: 1,
-                ease: [0.43, 0.13, 0.23, 0.96]
-              }
-            }}
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, y: -100 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-primary"
           >
-            <Loading onLoadingComplete={handleLoadingComplete} />
+            <Loading onComplete={handleLoadingComplete} />
           </motion.div>
         )}
       </AnimatePresence>
 
       {/* Main Content */}
       <motion.div
-        key="content"
         initial={{ opacity: 0 }}
-        animate={{ 
-          opacity: isLoading ? 0 : 1,
-        }}
-        transition={{ duration: 0.5 }}
-        className="relative"
-        style={{ 
-          pointerEvents: isLoading ? 'none' : 'auto',
-        }}
+        animate={{ opacity: isLoading ? 0 : 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className={`${isLoading ? 'pointer-events-none' : ''}`}
       >
         <Navbar />
         <main className="overflow-x-hidden">
@@ -89,6 +85,14 @@ const App = () => {
             transition={{ duration: 0.5 }}
             viewport={{ once: true, margin: "-100px" }}
           >
+            <Projects />
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
             <Contact />
           </motion.div>
         </main>
@@ -104,6 +108,6 @@ const App = () => {
       </motion.div>
     </div>
   );
-};
+}
 
 export default App;

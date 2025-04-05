@@ -60,7 +60,12 @@ const Hero = () => {
               }}
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
+              draggable="false"
+              onContextMenu={(e) => e.preventDefault()}
             />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <span className="text-white/30 text-xs">© Anwar Sadath KY</span>
+            </div>
           </div>
         </motion.div>
       </div>
