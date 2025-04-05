@@ -16,7 +16,7 @@ const Loading = ({ onLoadingComplete }) => {
     // Complete loading after content is shown
     const completeTimeout = setTimeout(() => {
       onLoadingComplete();
-    }, 2000);
+    }, 4000);
 
     return () => {
       clearTimeout(showTimeout);

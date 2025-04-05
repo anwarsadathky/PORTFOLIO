@@ -99,7 +99,7 @@ const App = () => {
           viewport={{ once: true }}
           className="py-6 text-center text-textSecondary"
         >
-          <p>&copy; 2024 A.S.K. All rights reserved.</p>
+          <p>&copy; 2025 A.S.K. All rights reserved.</p>
         </motion.footer>
       </motion.div>
     </div>
